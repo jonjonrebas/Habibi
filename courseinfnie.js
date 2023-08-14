@@ -94,7 +94,7 @@ const musicName = "Ending_Spring_Mix_II_(part 1)_Dee_M.mp3";
 ctx.fillStyle = 'black';
 ctx.font = '16px Arial';
 ctx.textAlign = 'right'; // Align text to the right
-ctx.fillText('Now streaming: ' + musicName, canvas.width - 10, fontSize + 5);
+
 
 
 
@@ -162,7 +162,9 @@ ctx.fillRect(car.x + 75, car.y + 8, 3, 3); // Eye
 ctx.fillStyle = 'black';
 ctx.font = '20px Arial';
 ctx.textAlign = 'left'; // Align text to the left
-ctx.fillText('Obstacles dépassés: ' + obstaclesPassed, 10, fontSize + 5);
+document.getElementById('score').textContent = obstaclesPassed;
+
+
 
 
    // Create new obstacle
