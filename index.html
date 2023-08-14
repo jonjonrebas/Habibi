@@ -27,7 +27,6 @@
         #moveDown {
             right: 20px;
         }
-
     </style>
 </head>
 <body>
@@ -47,9 +46,8 @@
         window.addEventListener('resize', resizeCanvas);
         window.addEventListener('load', resizeCanvas);
     </script>
-    
+    <button id="moveUp" ontouchstart="startMoving('up')" ontouchend="stopMoving()">↑</button>
+    <button id="moveDown" ontouchstart="startMoving('down')" ontouchend="stopMoving()">↓</button>
     <script src="courseinfnie.js"></script>
-    <button id="moveUp" onclick="moveDonkey('up')">↑</button>
-    <button id="moveDown" onclick="moveDonkey('down')">↓</button>    
 </body>
 </html>
