@@ -69,7 +69,7 @@
         }
     </style>
 </head>
-<body>
+<body ontouchstart="">
     <h1>L'aventure de Habibi à Shouraneya</h1>
     <div class="story">
         <p>Dans la terre aride de Shouraneya, Habibi le chameau et sa fidèle compagne, la tante Safïa, vivent paisiblement. Un jour, le sorcier maléfique Zafar revient, terrorisant le village avec ses rayons laser et ciblant Safïa qui possède un talisman capable de le vaincre. Habibi est envoyé en urgence au village voisin pour trouver un guerrier légendaire capable de stopper Zafar. Malgré un désert impitoyable et de nombreux obstacles, le courage de Habibi et l'espoir de sauver sa tante et le village le poussent en avant.</p>
@@ -84,8 +84,8 @@
         </div>
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="arrows">
-            <button class="arrow-button" id="moveUp" ontouchstart="startMoving('up')" ontouchend="stopMoving()">↑</button>
-            <button class="arrow-button" id="moveDown" ontouchstart="startMoving('down')" ontouchend="stopMoving()">↓</button>
+            <button class="arrow-button" id="moveUp" ontouchstart="startMoving('up'); return false;" ontouchend="stopMoving(); return false;">↑</button>
+            <button class="arrow-button" id="moveDown" ontouchstart="startMoving('down'); return false;" ontouchend="stopMoving(); return false;">↓</button>
         </div>
     </div>
     <audio id="gameMusic" loop>
