@@ -17,6 +17,18 @@
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <button onclick="startGame()">Start</button>
     <button onclick="stopGame()">Stop</button>
+    <script>
+        function resizeCanvas() {
+            const canvas = document.getElementById('gameCanvas');
+            const width = window.innerWidth;
+            const height = window.innerHeight * 0.6; // You can adjust this value
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', resizeCanvas);
+    </script>
+    
     <script src="courseinfnie.js"></script>
     <button id="moveUp" ontouchstart="moveDonkey('up')">↑</button>
 <button id="moveDown" ontouchstart="moveDonkey('down')">↓</button>
