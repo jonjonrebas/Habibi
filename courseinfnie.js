@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 let gameInterval;
 
 function startGame() {
-    gameInterval = setInterval(updateGame, 5);
+    gameInterval = setInterval(updateGame, 7);
 }
 
 function stopGame() {
@@ -19,6 +19,16 @@ const car = {
 
 const obstacles = [];
 
+window.moveDonkey = function(direction) {
+    const moveAmount = 4; // Adjust this value for speed
+    if (direction === 'up') car.y -= moveAmount;
+    if (direction === 'down') car.y += moveAmount;
+
+    // Make sure the donkey stays within bounds
+    if (car.y < 0) car.y = 0;
+    if (car.y > canvas.height - 30) car.y = canvas.height - 30;
+};
+
 function updateGame() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,29 +37,19 @@ function updateGame() {
     ctx.fillStyle = 'gray';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-// Draw donkey (as the car)
-ctx.fillStyle = 'white';
-ctx.fillRect(car.x, car.y, 60, 30); // Body
-ctx.fillRect(car.x + 40, car.y - 20, 20, 20); // Head
-ctx.fillRect(car.x + 60, car.y - 15, 10, 5); // Ear
-ctx.fillRect(car.x, car.y + 30, 10, 10); // Leg
-ctx.fillRect(car.x + 50, car.y + 30, 10, 10); // Leg
-ctx.fillStyle = 'black';
-ctx.fillRect(car.x + 50, car.y - 10, 5, 5); // Eye
+    // Draw donkey (as the car)
+    ctx.fillStyle = 'white';
+    ctx.fillRect(car.x, car.y, 60, 30); // Body
+    ctx.fillRect(car.x + 40, car.y - 20, 20, 20); // Head
+    ctx.fillRect(car.x + 60, car.y - 15, 10, 5); // Ear
+    ctx.fillRect(car.x, car.y + 30, 10, 10); // Leg
+    ctx.fillRect(car.x + 50, car.y + 30, 10, 10); // Leg
+    ctx.fillStyle = 'black';
+    ctx.fillRect(car.x + 50, car.y - 10, 5, 5); // Eye
 
-function moveDonkey(direction) {
-    const moveAmount = 4; // Adjust this value for speed
-    if (direction === 'up') car.y -= moveAmount;
-    if (direction === 'down') car.y += moveAmount;
-
-    // Make sure the donkey stays within bounds
+    // Move car
     if (car.y < 0) car.y = 0;
     if (car.y > canvas.height - 30) car.y = canvas.height - 30;
-}
-// Move car
-if (car.y < 0) car.y = 0;
-if (car.y > canvas.height - 30) car.y = canvas.height - 30;
-
 
     // Draw obstacles
     ctx.fillStyle = 'red';
@@ -83,7 +83,6 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown') car.y += 5; // Move down
     if (e.key === 'ArrowUp') car.y -= 5; // Move up
 });
-
 
 document.addEventListener('keyup', (e) => {
     car.speed = 20;
