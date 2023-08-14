@@ -1,5 +1,10 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+let stones = [];
+let palmTrees = [];
+
+
+let obstaclesPassed = 0;
 
 let gameInterval;
 let moveDirection = null;
@@ -32,19 +37,91 @@ function updateGame() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw road
-    ctx.fillStyle = 'gray';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Draw road (desert background)
+ctx.fillStyle = '#FDEAA8'; // More yellow desert color
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw donkey (as the car)
-    ctx.fillStyle = 'white';
-    ctx.fillRect(car.x, car.y, 60, 30); // Body
-    ctx.fillRect(car.x + 40, car.y - 20, 20, 20); // Head
-    ctx.fillRect(car.x + 60, car.y - 15, 10, 5); // Ear
-    ctx.fillRect(car.x, car.y + 30, 10, 10); // Leg
-    ctx.fillRect(car.x + 50, car.y + 30, 10, 10); // Leg
-    ctx.fillStyle = 'black';
-    ctx.fillRect(car.x + 50, car.y - 10, 5, 5); // Eye
+// Draw and move stones
+stones.forEach((stone, index) => {
+    ctx.fillStyle = '#696969'; // Stone color
+    ctx.beginPath();
+    ctx.arc(stone.x, stone.y, 20, 0, Math.PI, true); // Top of the stone
+    ctx.quadraticCurveTo(stone.x - 10, stone.y + 10, stone.x - 20, stone.y); // Left side
+    ctx.quadraticCurveTo(stone.x, stone.y + 20, stone.x + 20, stone.y); // Bottom and right side
+    ctx.closePath();
+    ctx.fill();
+    stone.x -= 2; // Move stone to the left
+});
+
+// Draw and move palm trees
+palmTrees.forEach((palmTree, index) => {
+    // Trunk
+    ctx.fillStyle = '#8B4513'; // Trunk color
+    ctx.fillRect(palmTree.x, palmTree.y, 10, 60);
+
+    // Leaves
+    ctx.fillStyle = '#228B22'; // Leaf color
+    [30, 40, 50].forEach((length) => {
+        [-1, 1].forEach((direction) => {
+            ctx.beginPath();
+            ctx.moveTo(palmTree.x + 5, palmTree.y);
+            ctx.lineTo(palmTree.x + 5 + length * direction, palmTree.y - 40);
+            ctx.lineTo(palmTree.x + 5 + (length - 10) * direction, palmTree.y - 40);
+            ctx.closePath();
+            ctx.fill();
+        });
+    });
+    palmTree.x -= 2; // Move palm tree to the left
+});
+
+// Add new stones and palm trees if needed
+if (Math.random() < 0.02) {
+    stones.push({ x: canvas.width, y: canvas.height - 20 });
+}
+if (Math.random() < 0.005) {
+    palmTrees.push({ x: canvas.width, y: canvas.height - 80 });
+}
+
+// Remove off-screen stones and palm trees
+stones = stones.filter(stone => stone.x > -20);
+palmTrees = palmTrees.filter(palmTree => palmTree.x > -10);
+
+
+// Draw the streaming text
+const musicName = "Ending_Spring_Mix_II_(part 1)_Dee_M.mp3";
+ctx.fillStyle = 'black';
+ctx.font = '16px Arial';
+ctx.textAlign = 'right'; // Align text to the right
+ctx.fillText('Now streaming: ' + musicName, canvas.width - 10, 20);
+
+// Draw the camel
+// Body
+ctx.fillStyle = '#C2A080'; // Camel color
+ctx.fillRect(car.x + 15, car.y + 10, 55, 15); // Main body
+
+// Humps
+ctx.fillRect(car.x + 20, car.y, 35, 10); // Upper hump
+ctx.fillRect(car.x + 25, car.y - 5, 25, 5); // Top of the hump
+
+// Neck and Head
+ctx.fillRect(car.x + 65, car.y + 10, 5, 10); // Neck
+ctx.fillRect(car.x + 70, car.y + 10, 10, 5); // Head
+ctx.fillRect(car.x + 80, car.y + 10, 5, 5); // Snout
+
+// Legs
+ctx.fillRect(car.x + 10, car.y + 25, 5, 20); // Front left leg
+ctx.fillRect(car.x + 25, car.y + 25, 5, 20); // Front right leg
+ctx.fillRect(car.x + 50, car.y + 25, 5, 20); // Back left leg
+ctx.fillRect(car.x + 65, car.y + 25, 5, 20); // Back right leg
+
+// Tail
+ctx.fillRect(car.x + 5, car.y + 15, 5, 10); // Tail
+
+// Eye
+ctx.fillStyle = '#000000';
+ctx.fillRect(car.x + 75, car.y + 8, 3, 3); // Eye
+
+
 
     if (moveDirection === 'up') car.y -= 4;
     if (moveDirection === 'down') car.y += 4;
@@ -53,29 +130,54 @@ function updateGame() {
     if (car.y < 0) car.y = 0;
     if (car.y > canvas.height - 30) car.y = canvas.height - 30;
 
-    // Draw obstacles
-    ctx.fillStyle = 'red';
-    obstacles.forEach((obstacle, index) => {
-        ctx.fillRect(obstacle.x, obstacle.y, 100, 20);
-        obstacle.x -= 2; // Move obstacles to the left
-        // Check collision
-        if (
-            car.x < obstacle.x + 100 &&
-            car.x + 50 > obstacle.x &&
-            car.y < obstacle.y + 20 &&
-            car.y + 30 > obstacle.y
-        ) {
-            stopGame();
-            alert('Game Over!');
-        }
-        // Remove off-screen obstacles
-        if (obstacle.x < -100) {
-            obstacles.splice(index, 1);
-        }
-    });
+   // Draw obstacles
+   ctx.fillStyle = 'red';
+   obstacles.forEach((obstacle, index) => {
+       ctx.fillRect(obstacle.x, obstacle.y, 100, 20);
+       obstacle.x -= 2; // Move obstacles to the left
 
-    // Create new obstacle
-    if (Math.random() < 0.01) {
-        obstacles.push({ x: canvas.width, y: Math.random() * canvas.height });
-    }
+       // Check collision
+       if (
+           car.x < obstacle.x + 100 &&
+           car.x + 50 > obstacle.x &&
+           car.y < obstacle.y + 20 &&
+           car.y + 30 > obstacle.y
+       ) {
+           stopGame();
+           alert('Game Over!');
+       }
+
+       // Remove off-screen obstacles
+       if (obstacle.x < -100) {
+           obstaclesPassed++; // Increment the counter
+           obstacles.splice(index, 1);
+       }
+   });
+
+ // Draw the number of obstacles passed
+ctx.fillStyle = 'black';
+ctx.font = '20px Arial';
+ctx.textAlign = 'left'; // Align text to the left
+ctx.fillText('Obstacles dépassés: ' + obstaclesPassed, 10, 30);
+
+
+   // Create new obstacle
+   if (Math.random() < 0.01) {
+       obstacles.push({ x: canvas.width, y: Math.random() * canvas.height });
+   }
+}
+function stopGame() {
+    clearInterval(gameInterval);
+    alert('Bravo, tu as réussi à dépasser ' + obstaclesPassed + " obstacles !");
+}
+function startGame() {
+    gameInterval = setInterval(updateGame, 7);
+    document.getElementById('gameMusic').play(); // Start playing music
+}
+
+function stopGame() {
+    clearInterval(gameInterval);
+    document.getElementById('gameMusic').pause(); // Stop playing music
+    document.getElementById('gameMusic').currentTime = 0; // Reset to the beginning
+    alert('Bravo, tu as réussi à dépasser ' + obstaclesPassed + " obstacles !");
 }
