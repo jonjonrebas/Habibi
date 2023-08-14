@@ -29,6 +29,11 @@
         .start-button:hover {
             background-color: #A08060;
         }
+        #gameContainer {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
         canvas {
             border: 1px solid black;
             background-color: #f4f4f4;
@@ -41,15 +46,24 @@
             border: 2px solid #333;
             border-radius: 50px;
             position: absolute;
-            bottom: 20px;
+            bottom: 10%;
             text-align: center;
             line-height: 100px;
         }
         #moveUp {
-            left: 20px;
+            left: 5%;
         }
         #moveDown {
-            right: 20px;
+            right: 5%;
+        }
+        @media (max-width: 800px) {
+            #moveUp, #moveDown {
+                font-size: 32px;
+                width: 80px;
+                height: 80px;
+                line-height: 80px;
+                bottom: 5%;
+            }
         }
     </style>
 </head>
@@ -62,9 +76,11 @@
         <p><strong>Accompagné par les rythmes envoûtants de Dee_M, son Mix soigné te guide et te motive dans cette quête épique. Laisse-toi porter par la musique et embarque dans l'aventure !</strong></p>
     </div>
     <button class="start-button" onclick="startGame()">Start</button>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <button id="moveUp" ontouchstart="startMoving('up')" ontouchend="stopMoving()">↑</button>
-    <button id="moveDown" ontouchstart="startMoving('down')" ontouchend="stopMoving()">↓</button>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <button id="moveUp" ontouchstart="startMoving('up')" ontouchend="stopMoving()">↑</button>
+        <button id="moveDown" ontouchstart="startMoving('down')" ontouchend="stopMoving()">↓</button>
+    </div>
     <audio id="gameMusic" loop>
         <source src="Ending_Spring_Mix_II_(part 1)_Dee_M.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas l'audio.
