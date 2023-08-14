@@ -37,32 +37,41 @@
         canvas {
             border: 1px solid black;
             background-color: #f4f4f4;
+            display: block;
+            margin: 0 auto;
         }
-        #moveUp, #moveDown {
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+        }
+        .score {
+            font-size: 20px;
+        }
+        .music-info {
+            font-size: 16px;
+        }
+        .arrows {
+            display: flex;
+            gap: 20px;
+        }
+        .arrow-button {
             font-size: 48px;
             width: 100px;
             height: 100px;
             background-color: #f4f4f4;
             border: 2px solid #333;
             border-radius: 50px;
-            position: absolute;
-            bottom: 10%;
             text-align: center;
             line-height: 100px;
         }
-        #moveUp {
-            left: 5%;
-        }
-        #moveDown {
-            right: 5%;
-        }
         @media (max-width: 800px) {
-            #moveUp, #moveDown {
+            .arrow-button {
                 font-size: 32px;
                 width: 80px;
                 height: 80px;
                 line-height: 80px;
-                bottom: 5%;
             }
         }
     </style>
@@ -76,9 +85,15 @@
     </div>
     <button class="start-button" onclick="startGame()">Start</button>
     <div id="gameContainer">
+        <div class="controls">
+            <div class="score">Obstacles dépassés: <span id="score">0</span></div>
+            <div class="music-info">Now streaming: Ending_Spring_Mix_II_(part 1)_Dee_M.mp3</div>
+        </div>
         <canvas id="gameCanvas" width="800" height="400"></canvas>
-        <button id="moveUp" ontouchstart="startMoving('up')" ontouchend="stopMoving()">↑</button>
-        <button id="moveDown" ontouchstart="startMoving('down')" ontouchend="stopMoving()">↓</button>
+        <div class="arrows">
+            <button class="arrow-button" id="moveUp" ontouchstart="startMoving('up')" ontouchend="stopMoving()">↑</button>
+            <button class="arrow-button" id="moveDown" ontouchstart="startMoving('down')" ontouchend="stopMoving()">↓</button>
+        </div>
     </div>
     <audio id="gameMusic" loop>
         <source src="Ending_Spring_Mix_II_(part 1)_Dee_M.mp3" type="audio/mpeg">
