@@ -168,7 +168,7 @@ document.getElementById('score').textContent = obstaclesPassed;
 
 
    // Create new obstacle
-   if (Math.random() < 0.01) {
+   if (Math.random() < 0.015) {
        obstacles.push({ x: canvas.width, y: Math.random() * canvas.height });
    }
 }
