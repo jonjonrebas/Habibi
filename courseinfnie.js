@@ -2,6 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 let gameInterval;
+let moveDirection = null;
 
 function startGame() {
     gameInterval = setInterval(updateGame, 7);
@@ -11,6 +12,14 @@ function stopGame() {
     clearInterval(gameInterval);
 }
 
+function startMoving(direction) {
+    moveDirection = direction;
+}
+
+function stopMoving() {
+    moveDirection = null;
+}
+
 const car = {
     x: 100,
     y: canvas.height / 2 - 15,
@@ -18,16 +27,6 @@ const car = {
 };
 
 const obstacles = [];
-
-window.moveDonkey = function(direction) {
-    const moveAmount = 4; // Adjust this value for speed
-    if (direction === 'up') car.y -= moveAmount;
-    if (direction === 'down') car.y += moveAmount;
-
-    // Make sure the donkey stays within bounds
-    if (car.y < 0) car.y = 0;
-    if (car.y > canvas.height - 30) car.y = canvas.height - 30;
-};
 
 function updateGame() {
     // Clear the canvas
@@ -47,7 +46,10 @@ function updateGame() {
     ctx.fillStyle = 'black';
     ctx.fillRect(car.x + 50, car.y - 10, 5, 5); // Eye
 
-    // Move car
+    if (moveDirection === 'up') car.y -= 4;
+    if (moveDirection === 'down') car.y += 4;
+
+    // Make sure the donkey stays within bounds
     if (car.y < 0) car.y = 0;
     if (car.y > canvas.height - 30) car.y = canvas.height - 30;
 
@@ -77,13 +79,3 @@ function updateGame() {
         obstacles.push({ x: canvas.width, y: Math.random() * canvas.height });
     }
 }
-
-// Event listener for arrow keys
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown') car.y += 5; // Move down
-    if (e.key === 'ArrowUp') car.y -= 5; // Move up
-});
-
-document.addEventListener('keyup', (e) => {
-    car.speed = 20;
-});
