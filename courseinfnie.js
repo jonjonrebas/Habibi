@@ -36,6 +36,8 @@ const obstacles = [];
 function updateGame() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const fontSize = canvas.width > 800 ? 20 : 14;
+ctx.font = fontSize + 'px Arial';
 
 // Draw road (desert background)
 ctx.fillStyle = '#FDEAA8'; // More yellow desert color
@@ -92,7 +94,9 @@ const musicName = "Ending_Spring_Mix_II_(part 1)_Dee_M.mp3";
 ctx.fillStyle = 'black';
 ctx.font = '16px Arial';
 ctx.textAlign = 'right'; // Align text to the right
-ctx.fillText('Now streaming: ' + musicName, canvas.width - 10, 20);
+ctx.fillText('Now streaming: ' + musicName, canvas.width - 10, fontSize + 5);
+
+
 
 // Draw the camel
 // Body
@@ -158,7 +162,7 @@ ctx.fillRect(car.x + 75, car.y + 8, 3, 3); // Eye
 ctx.fillStyle = 'black';
 ctx.font = '20px Arial';
 ctx.textAlign = 'left'; // Align text to the left
-ctx.fillText('Obstacles dépassés: ' + obstaclesPassed, 10, 30);
+ctx.fillText('Obstacles dépassés: ' + obstaclesPassed, 10, fontSize + 5);
 
 
    // Create new obstacle
