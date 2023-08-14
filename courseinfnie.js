@@ -10,7 +10,7 @@ let gameInterval;
 let moveDirection = null;
 
 function startGame() {
-    gameInterval = setInterval(updateGame, 7);
+    gameInterval = setInterval(updateGame, 6);
 }
 
 function stopGame() {
