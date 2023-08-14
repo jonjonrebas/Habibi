@@ -90,7 +90,7 @@ palmTrees = palmTrees.filter(palmTree => palmTree.x > -10);
 
 
 // Draw the streaming text
-const musicName = "Ending_Spring_Mix_II_(part 1)_Dee_M.mp3";
+const musicName = "Summer_Early_Session_(7am)_Chris_Mooser.mp3";
 ctx.fillStyle = 'black';
 ctx.font = '16px Arial';
 ctx.textAlign = 'right'; // Align text to the right
