@@ -12,8 +12,17 @@ let gameInterval;
 let moveDirection = null;
 
 function startGame() {
-    gameInterval = setInterval(updateGame, 6);
+    if (!habibiImage.complete) {
+        habibiImage.onload = function() {
+            gameInterval = setInterval(updateGame, 7);
+            document.getElementById('gameMusic').play(); // Start playing music
+        }
+    } else {
+        gameInterval = setInterval(updateGame, 7);
+        document.getElementById('gameMusic').play(); // Start playing music
+    }
 }
+
 
 function stopGame() {
     clearInterval(gameInterval);
