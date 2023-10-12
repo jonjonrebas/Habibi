@@ -1,5 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const habibiImage = new Image();
+habibiImage.src = 'habibi.png';
 let stones = [];
 let palmTrees = [];
 
@@ -97,34 +99,8 @@ ctx.textAlign = 'right'; // Align text to the right
 
 
 
-
-// Draw the camel
-// Body
-ctx.fillStyle = '#C2A080'; // Camel color
-ctx.fillRect(car.x + 15, car.y + 10, 55, 15); // Main body
-
-// Humps
-ctx.fillRect(car.x + 20, car.y, 35, 10); // Upper hump
-ctx.fillRect(car.x + 25, car.y - 5, 25, 5); // Top of the hump
-
-// Neck and Head
-ctx.fillRect(car.x + 65, car.y + 10, 5, 10); // Neck
-ctx.fillRect(car.x + 70, car.y + 10, 10, 5); // Head
-ctx.fillRect(car.x + 80, car.y + 10, 5, 5); // Snout
-
-// Legs
-ctx.fillRect(car.x + 10, car.y + 25, 5, 20); // Front left leg
-ctx.fillRect(car.x + 25, car.y + 25, 5, 20); // Front right leg
-ctx.fillRect(car.x + 50, car.y + 25, 5, 20); // Back left leg
-ctx.fillRect(car.x + 65, car.y + 25, 5, 20); // Back right leg
-
-// Tail
-ctx.fillRect(car.x + 5, car.y + 15, 5, 10); // Tail
-
-// Eye
-ctx.fillStyle = '#000000';
-ctx.fillRect(car.x + 75, car.y + 8, 3, 3); // Eye
-
+// Après : dessinez l'image habibi.png
+ctx.drawImage(habibiImage, car.x, car.y, 90, 50); // 90x50 est la taille de l'image. Ajustez selon vos besoins.
 
 
     if (moveDirection === 'up') car.y -= 4;
